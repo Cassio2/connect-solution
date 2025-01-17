@@ -1,3 +1,4 @@
+// server.js
 const express = require('express');
 const path = require('path');
 const { engine } = require('express-handlebars');
@@ -5,6 +6,7 @@ const app = express();
 
 // Configuração do Handlebars
 app.engine('handlebars', engine({
+    // Aqui você pode configurar seu layout, se necessário
     defaultLayout: 'main', // Se você tiver um layout principal
 }));
 app.set('view engine', 'handlebars');
@@ -15,7 +17,11 @@ app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstra
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Rotas
+
 app.use('/', require('./routes/router'));
 
-// Exportando para a Vercel
-module.exports = app;
+// Iniciar o servidor
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+});
